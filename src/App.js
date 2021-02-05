@@ -17,8 +17,9 @@ export default class App extends Component{
     setAuth = async(username, password) => {
         if (await login(username, password)) {
             this.setState({auth: true})
+	    localStorage.setItem('auth','true')
         }
-        localStorage.setItem('auth','true')
+        
     }
     logout = ()=>{
       this.setState({auth:false})
