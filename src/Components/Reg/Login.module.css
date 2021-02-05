@@ -1,0 +1,27 @@
+.login {
+  height: 87vh !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.inputs {
+  box-shadow: 3px 3px 20px #c8c8c2;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 30px 40px;
+  border: 1px solid#c8c8c2;
+  border-radius: 10px;
+}
+.inputs input {
+  margin: 20px 0;
+  padding: 5px;
+  border-radius: 5px;
+  text-align: left;
+  border: 2px solid #c8c8c2;
+  /* border-color: red; */
+}
+.inputs input:focus {
+  outline: none;
+}

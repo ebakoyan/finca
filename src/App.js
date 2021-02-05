@@ -1,25 +1,58 @@
-import logo from './logo.svg';
-import './App.css';
+import {BrowserRouter as Router, Switch, Route,Redirect } from "react-router-dom";
+import {Component} from "react"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import {Home} from './Components/Home/Home'
+import {Header} from './Components/Header/Header'
+import Liked from './Components/Liked/Liked'
+import Login from './Components/Login/Login'
+import Reg from './Components/Reg/Login'
+
+import {login} from './api'
+// import {fetchMusic} from './api'
+
+export default class App extends Component{
+    state = {
+        auth: JSON.parse(localStorage.getItem('auth')) || false,
+    }
+    setAuth = async(username, password) => {
+        if (await login(username, password)) {
+            this.setState({auth: true})
+        }
+        localStorage.setItem('auth','true')
+    }
+    logout = ()=>{
+      this.setState({auth:false})
+      localStorage.removeItem('auth')
+    }
+    render() {
+
+
+        return (this.state.auth
+            ? <Router>
+              <Header logout={this.logout}/>
+                    <Switch>
+                      <Route path='/' exact>
+                        <Home />
+                      </Route>
+                      <Route path = '/liked'>
+                        <Liked/>
+                      </Route>
+                      <Route>
+                        <div>404</div>
+                      </Route>
+                    </Switch>
+                </Router>
+            : <Router>
+              <Route path= '/' exact>
+                <Login setAuth={this.setAuth}></Login>
+              </Route>
+              <Route path='/reg'>
+                <Reg></Reg>
+              </Route>
+              <Redirect to='/'></Redirect> 
+
+            </Router>);
+    }
+
 }
 
-export default App;
