@@ -5,9 +5,11 @@ class Card extends Component {
         let likeList = JSON.parse(localStorage.getItem('likeList')) || [];
         let t = true
         for (let i = 0; i < likeList.length; i++) {
-            if (likeList[i].id == this.props.id) 
-                t = false;
-            i = likeList.length;
+            if (likeList[i].id == this.props.id){
+	    	t = false;
+            	i = likeList.length;
+             } 
+                
         }
         if (t) {
             likeList.push(this.props)
