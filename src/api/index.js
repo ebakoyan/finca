@@ -7,28 +7,23 @@ const _auth = "http://212.73.82.108:8081/api/";
 
 // Music list
 
-export const fetchMusic = async() => {
-    const {data} = await axios.get(`${_musicApi}tracks/top${_apiKey}`)
+export const fetchMusic = async () => {
     const musicList = [];
-    await data
-        .tracks
-        .forEach(async(item) => {
-            const setMusic = async() => {
-                const itemImgData = await axios.get(`${_musicApi}artists/${item.artistId}/images${_apiKey}`)
-                const img = itemImgData.data.images[0].url;
-                const track = {
-                    artistName: item.artistName,
-                    trackName: item.name,
-                    track: item.previewURL,
-                    img: img,
-                    id: item.id
-                }
-                await musicList.push(track);
-            }
-            await setMusic();
-        })
-    return musicList
-}
+    const { data } = await axios.get(`${_musicApi}tracks/top${_apiKey}`);
+    for await (const item of data.tracks) {
+      const { data: artist } = await axios.get(
+        `${_musicApi}artists/${item.artistId}/images${_apiKey}`
+      );
+      musicList.push({
+        artistName: item.artistName,
+        trackName: item.name,
+        track: item.previewURL,
+        img: artist.images[0].url,
+        id: item.id,
+      });
+    }
+    return musicList;
+  };
 
 export const login = async(username, password) => {
     try {

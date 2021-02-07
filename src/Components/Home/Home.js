@@ -1,12 +1,23 @@
 import {Component} from 'react'
-import data from '../../api/data/data'
 import Card from "../Card/Card"
 import Search from '../Search/Search'
 
+
 import {fetchMusic} from '../../api'
+
+let data=[]
+
 export class Home extends Component {
     state = {
-        musicList: data
+        musicList: [],
+        loading:true
+    }
+    componentDidMount(){
+        fetchMusic().then(res=>{
+            data=res;
+            this.setState({musicList:res},()=>{this.setState({loading:false})})
+            
+        })
     }
     change = ({target}) => {
         let list = [];
@@ -25,27 +36,24 @@ export class Home extends Component {
         }
     }
     render() {
-        if (this.state.re) {
-            console.log(this.state.musicList)
-        }
+
 
         return (
+            this.state.loading ? <div>Loading</div>:
             <div>
                 <div>
                     <Search change={this.change}/>
                 </div>
                 <div>
-                    {this
-                        .state
-                        .musicList
-                        .map(item =>< Card {
-                            ...item
-                        }
-                        key = {
-                            item.id
-                        } > </Card>)}
+
+
+
+
+
+                       {this.state.musicList.map(item=><Card {...item} key = {item.id}> </Card>)} 
+                        
                 </div>
-            </div>
+        </div>
         )
     }
 }
