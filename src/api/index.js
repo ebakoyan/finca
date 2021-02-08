@@ -2,7 +2,7 @@ import axios from 'axios'
 // Server keys
 
 const _apiKey = '?apikey=YTkxZTRhNzAtODdlNy00ZjMzLTg0MWItOTc0NmZmNjU4Yzk4';
-const _musicApi = 'http://api.napster.com/v2.2/';
+const _musicApi = 'https://api.napster.com/v2.2/';
 const _auth = "http://212.73.82.108:8081/api/";
 
 // Music list
